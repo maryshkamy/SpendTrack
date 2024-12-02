@@ -1,5 +1,6 @@
 package ca.on.conestogac.spendtrack.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -45,5 +46,23 @@ public class MainActivity extends AppCompatActivity {
         if (BudgetUtils.getBudgetValue(this) == 0L) {
             BudgetUtils.saveBudget((long) 5000, this);
         }
+
+        setAddExpenseActionButtonListener();
+        setExpensesListActionButtonListener();
     }
+
+    // Private method to set the add expense action button listener.
+    private void setAddExpenseActionButtonListener() {
+        binding.buttonAddExpense.setOnClickListener( view -> {
+            Intent intent = new Intent(MainActivity.this, AddExpenseActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    // Private method to set the expenses list action button listener.
+    private void setExpensesListActionButtonListener() {
+        binding.buttonExpensesList.setOnClickListener( view -> {
+        });
+    }
+
 }
