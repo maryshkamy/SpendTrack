@@ -6,53 +6,53 @@ import android.content.SharedPreferences;
 public class BudgetUtils {
 
     // Public method to save the budget data into shared preferences.
-    public static void saveBudget(Long budget, Context context) {
+    public static void saveBudget(Float budget, Context context) {
         if (budget != null) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(
                     "sharedpref_budget",
                     Context.MODE_PRIVATE
             );
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("budget", budget);
+            editor.putFloat("budget", budget);
             editor.commit();
         }
     }
 
     // Public method to save the current expense data into shared preferences.
-    public static void saveCurrentExpense(Long expense, Context context) {
+    public static void saveCurrentExpense(Float expense, Context context) {
         if (expense != null) {
             SharedPreferences sharedPreferences = context.getSharedPreferences(
                     "sharedpref_budget",
                     Context.MODE_PRIVATE
             );
-            long currentTotalExpense = sharedPreferences.getLong(
+            float currentTotalExpense = sharedPreferences.getFloat(
                     "current_total_expense",
-                    0L
+                    0f
             );
-            long updatedTotalExpense = currentTotalExpense + expense;
+            float updatedTotalExpense = currentTotalExpense + expense;
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("current_total_expense", updatedTotalExpense);
+            editor.putFloat("current_total_expense", updatedTotalExpense);
             editor.commit();
         }
     }
 
     // Public method to get the budget value stored into shared preferences.
-    public static long getBudgetValue(Context context) {
+    public static float getBudgetValue(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 "sharedpref_budget",
                 Context.MODE_PRIVATE
         );
 
-        return sharedPreferences.getLong("budget", 0L);
+        return sharedPreferences.getFloat("budget", 0f);
     }
 
     // Public method to get the current total expense value stored into shared preferences.
-    public static long getCurrentTotalExpenseValue(Context context) {
+    public static float getCurrentTotalExpenseValue(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 "sharedpref_budget",
                 Context.MODE_PRIVATE
         );
 
-        return sharedPreferences.getLong("current_total_expense", 0L);
+        return sharedPreferences.getFloat("current_total_expense", 0f);
     }
 }

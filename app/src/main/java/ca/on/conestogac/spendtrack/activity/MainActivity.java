@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private void setup() {
 
         // Validation of an existing budget value.
-        if (BudgetUtils.getBudgetValue(this) == 0L) {
-            BudgetUtils.saveBudget((long) 5000, this);
+        if (BudgetUtils.getBudgetValue(this) == 0f) {
+            BudgetUtils.saveBudget((float) 5000, this);
         }
 
         setAddExpenseActionButtonListener();

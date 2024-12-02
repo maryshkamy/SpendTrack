@@ -57,12 +57,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             binding.descriptionEditText.clearFocus();
 
             String amountText = String.valueOf(binding.amountEditText.getText()).trim();
-            Long amount = 0L;
+            Float amount = 0f;
 
             if (!TextUtils.isEmpty(amountText)) {
                 try {
-                    double amountDouble = Double.parseDouble(amountText);
-                    amount = Math.round(amountDouble * 100);
+                    amount = Float.parseFloat(amountText);
                 } catch (NumberFormatException e) {
                     MessageUtils.showErrorMessage(getString(R.string.invalid_amount_error_message), this);
                     return;
@@ -135,7 +134,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private method to create a new instance of the transaction.
-    private Expense createTransaction(String id, Long amount, String description) {
+    private Expense createTransaction(String id, Float amount, String description) {
         if (id == null) {
             id = String.valueOf(System.currentTimeMillis());
         }
