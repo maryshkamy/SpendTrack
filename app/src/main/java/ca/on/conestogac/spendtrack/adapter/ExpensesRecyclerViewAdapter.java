@@ -1,8 +1,13 @@
 package ca.on.conestogac.spendtrack.adapter;
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,36 +18,39 @@ import java.util.List;
 import ca.on.conestogac.spendtrack.databinding.ExpenseListRowBinding;
 import ca.on.conestogac.spendtrack.model.Expense;
 
-public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    // Instance of the generated binding class.
-    ExpenseListRowBinding rowBinding;
-
-    // Instance of the context.
-    Context context;
+public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesRecyclerViewAdapter.ViewHolder> {
 
     // Private instance of the expenses list.
     private final List<Expense> expenses;
+    private final Context context;
 
     // Class constructor.
     public ExpensesRecyclerViewAdapter(List<Expense> expenses, Context context) {
-        super();
         this.expenses = expenses;
         this.context = context;
     }
 
-    // View Interface Method for recycler view adapter.
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        rowBinding = ExpenseListRowBinding.inflate(layoutInflater, parent, false);
-        return new ViewHolder(rowBinding);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Use ViewBinding to inflate the layout
+        ExpenseListRowBinding binding = ExpenseListRowBinding.inflate(
+                LayoutInflater.from(parent.getContext()),
+                parent,
+                false
+        );
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Bind the data to the ViewHolder
+        Expense expense = expenses.get(position);
+        holder.bindView(
+                (long) (expense.getAmount() * 100), // Assuming `Expense.getAmount()` returns a float
+                expense.getDescription(),
+                position
+        );
     }
 
     @Override
@@ -50,24 +58,23 @@ public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         return expenses.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        ExpenseListRowBinding recyclerRowBinding;
+    // ViewHolder class
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ExpenseListRowBinding binding;
 
-        public ViewHolder(ExpenseListRowBinding listRowBinding) {
-            super(listRowBinding.getRoot());
-            this.recyclerRowBinding = listRowBinding;
+        public ViewHolder(ExpenseListRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        void bindView(
-                final long amount,
-                final String description,
-                final int position
-        ) {
+        public void bindView(final long amount, final String description, final int position) {
             DecimalFormat formatter = new DecimalFormat("#,##0.00");
             String formattedAmount = "$" + formatter.format(amount / 100.0);
 
-            recyclerRowBinding.descriptionTextView.setText(description);
-            recyclerRowBinding.amountTextView.setText(formattedAmount);
+            Log.d("Description", description);
+
+            binding.descriptionTextView.setText(description);
+            binding.amountTextView.setText(formattedAmount);
         }
     }
 }
