@@ -19,7 +19,6 @@
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="12sp" />
 
@@ -28,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@android:color/black"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -37,5 +35,5 @@
         android:layout_height="2dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/white" />
 </LinearLayout>

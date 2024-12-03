@@ -9,6 +9,7 @@ import android.view.WindowMetrics;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -106,6 +107,20 @@ public class MainActivity extends AppCompatActivity {
         float currentExpenses = BudgetUtils.getCurrentTotalExpenseValue(this);
 
         float progress = (currentExpenses / budget) * 100;
+
+        if (progress >= 0 && progress <= 50) {
+            @ColorInt int greenColor = getResources().getColor(R.color.green, getTheme());
+            binding.circularProgressIndicator.setIndicatorColor(greenColor);
+        } else if (progress > 50 && progress <= 75) {
+            @ColorInt int yellowColor = getResources().getColor(R.color.yellow, getTheme());
+            binding.circularProgressIndicator.setIndicatorColor(yellowColor);
+        } else if (progress > 75 && progress < 95) {
+            @ColorInt int orangeColor = getResources().getColor(R.color.orange, getTheme());
+            binding.circularProgressIndicator.setIndicatorColor(orangeColor);
+        } else {
+            @ColorInt int redColor = getResources().getColor(R.color.red, getTheme());
+            binding.circularProgressIndicator.setIndicatorColor(redColor);
+        }
 
         binding.progressTextView.setText(String.format("%s%%", (int) progress));
         binding.circularProgressIndicator.setMax(100);
