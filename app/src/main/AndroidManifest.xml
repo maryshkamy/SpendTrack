@@ -9,6 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpendTrack">
         <activity
+            android:name=".activity.AddExpenseActivity"
+            android:exported="false"
+            android:taskAffinity="" />
+
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true"
             android:taskAffinity=""
@@ -22,5 +27,4 @@
 
         <activity android:name="androidx.wear.activity.ConfirmationActivity" />
     </application>
-
 </manifest>

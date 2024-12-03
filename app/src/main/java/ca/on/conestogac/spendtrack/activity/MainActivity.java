@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityMainBinding;
+import ca.on.conestogac.spendtrack.utils.BudgetUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,5 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     // Private method to set the initial state for any ui component.
     private void setup() {
+
+        // Validation of an existing budget value.
+        if (BudgetUtils.getBudgetValue(this) == 0L) {
+            BudgetUtils.saveBudget((long) 5000, this);
+        }
     }
 }
