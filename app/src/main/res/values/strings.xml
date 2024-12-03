@@ -9,4 +9,5 @@
     <string name="invalid_amount_error_message">Invalid amount value.</string>
     <string name="add_expense_error_message">Fill all fields.</string>
     <string name="expense_saved">Expense saved.</string>
+    <string name="budget_usage">Budget Usage</string>
 </resources>

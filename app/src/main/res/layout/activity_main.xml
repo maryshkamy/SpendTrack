@@ -7,37 +7,85 @@
     android:layout_height="match_parent"
     android:padding="4dp"
     tools:context=".activity.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         app:layout_boxedEdges="all">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/circularProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:indicatorSize="64dp"
+                app:indicatorColor="@color/primary_color"
+                app:trackColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/progressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="100%"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+        </FrameLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:text="@string/budget_usage"
+            android:textSize="11sp"
+            android:textColor="@android:color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:gravity="center">
-            <Button
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSettings"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/button_rounded_background"
+                app:icon="@drawable/settings_icon"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="12dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonExpensesList"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/button_rounded_background"
-                android:drawableTop="@drawable/list_icon"/>
+                app:icon="@drawable/list_icon"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="12dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonAddExpense"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:layout_marginStart="16dp"
                 android:background="@drawable/button_rounded_background"
-                android:drawableTop="@drawable/plus_icon" />
+                app:icon="@drawable/plus_icon"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="12dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.wear.widget.BoxInsetLayout>

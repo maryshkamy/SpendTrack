@@ -1,8 +1,12 @@
 package ca.on.conestogac.spendtrack.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
+import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateProgressIndicator();
+    }
+
     // Private method to set the initial state for any ui component.
     private void setup() {
 
@@ -47,8 +57,39 @@ public class MainActivity extends AppCompatActivity {
             BudgetUtils.saveBudget((float) 5000, this);
         }
 
-        setAddExpenseActionButtonListener();
+        setupLayout();
+        setSettingsActionButtonListener();
         setExpensesListActionButtonListener();
+        setAddExpenseActionButtonListener();
+        updateProgressIndicator();
+    }
+
+    // Private method to set the width and height for the buttons according to the device screen size.
+    private void setupLayout() {
+        WindowManager windowManager = getWindowManager();
+        WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
+        Rect bounds = windowMetrics.getBounds();
+
+        int screenWidth = bounds.width();
+        final int buttonSize = (int) (screenWidth * 0.15);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(buttonSize, buttonSize);
+        params.setMargins(8, 0, 8, 0);
+        binding.buttonSettings.setLayoutParams(params);
+        binding.buttonExpensesList.setLayoutParams(params);
+        binding.buttonAddExpense.setLayoutParams(params);
+    }
+
+    // Private method to set the settings action button listener.
+    private void setSettingsActionButtonListener() {
+        binding.buttonSettings.setOnClickListener( view -> {
+        });
+    }
+
+    // Private method to set the expenses list action button listener.
+    private void setExpensesListActionButtonListener() {
+        binding.buttonExpensesList.setOnClickListener( view -> {
+        });
     }
 
     // Private method to set the add expense action button listener.
@@ -59,10 +100,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Private method to set the expenses list action button listener.
-    private void setExpensesListActionButtonListener() {
-        binding.buttonExpensesList.setOnClickListener( view -> {
-        });
-    }
+    // Private method to update the circular progress indicator.
+    private void updateProgressIndicator() {
+        float budget = BudgetUtils.getBudgetValue(this);
+        float currentExpenses = BudgetUtils.getCurrentTotalExpenseValue(this);
 
+        float progress = (currentExpenses / budget) * 100;
+
+        binding.progressTextView.setText(String.format("%s%%", (int) progress));
+        binding.circularProgressIndicator.setMax(100);
+        binding.circularProgressIndicator.setProgress((int) progress);
+    }
 }
