@@ -50,7 +50,7 @@ public class ExpenseUtils {
                 String[] info = savedTransaction.split("-");
                 Expense task = new Expense(
                         entry.getKey().toString(),
-                        Long.parseLong(info[0]),
+                        Float.parseFloat(info[0]),
                         info[1]
                 );
                 expenseList.add(task);

@@ -5,13 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:padding="8dp"
     tools:context=".activity.AddExpenseActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -83,8 +82,7 @@
                     android:gravity="center"
                     android:textSize="14sp"
                     android:text="@string/save"
-                    android:backgroundTint="@color/primary_color"
-                    android:textColor="@android:color/white" />
+                    android:background="@drawable/button_rounded_background" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -56,14 +56,25 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             binding.amountEditText.clearFocus();
             binding.descriptionEditText.clearFocus();
 
-            Long amount = Long.getLong(String.valueOf(binding.amountEditText.getText()).trim());
+            String amountText = String.valueOf(binding.amountEditText.getText()).trim();
+            Float amount = 0f;
+
+            if (!TextUtils.isEmpty(amountText)) {
+                try {
+                    amount = Float.parseFloat(amountText);
+                } catch (NumberFormatException e) {
+                    MessageUtils.showErrorMessage(getString(R.string.invalid_amount_error_message), this);
+                    return;
+                }
+            }
+
             String description = String.valueOf(binding.descriptionEditText.getText()).trim();
 
             if (amount != 0L && !description.isEmpty()) {
                 Expense expense = createTransaction(null, amount, description);
                 saveTransaction(expense, Constants.ACTION_ADD);
             } else {
-                MessageUtils.showErrorMessage(getString(R.string.add_transaction_error_message), this);
+                MessageUtils.showErrorMessage(getString(R.string.add_expense_error_message), this);
             }
         }
     }
@@ -123,7 +134,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Private method to create a new instance of the transaction.
-    private Expense createTransaction(String id, Long amount, String description) {
+    private Expense createTransaction(String id, Float amount, String description) {
         if (id == null) {
             id = String.valueOf(System.currentTimeMillis());
         }
@@ -135,7 +146,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     private void saveTransaction(Expense expense, int action) {
         if (action == Constants.ACTION_ADD) {
             ExpenseUtils.save(expense, this);
-            MessageUtils.showSuccessMessage(getString(R.string.transaction_saved), this);
+            MessageUtils.showSuccessMessage(getString(R.string.expense_saved), this);
 
             binding.amountEditText.setText("");
             binding.descriptionEditText.setText("");

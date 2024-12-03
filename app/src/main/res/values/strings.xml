@@ -6,6 +6,8 @@
     <string name="description">Description</string>
     <string name="save">Save</string>
 
-    <string name="add_transaction_error_message">Fill all fields.</string>
-    <string name="transaction_saved">Transaction saved.</string>
+    <string name="invalid_amount_error_message">Invalid amount value.</string>
+    <string name="add_expense_error_message">Fill all fields.</string>
+    <string name="expense_saved">Expense saved.</string>
+    <string name="budget_usage">Budget Usage</string>
 </resources>

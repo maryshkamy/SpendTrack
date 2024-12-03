@@ -2,11 +2,11 @@ package ca.on.conestogac.spendtrack.model;
 
 public class Expense {
     private String id;
-    private long amount;
+    private float amount;
     private String description;
 
 
-    public Expense(String id, long amount, String description) {
+    public Expense(String id, float amount, String description) {
         this.id = id;
         this.amount = amount;
         this.description = description;
@@ -20,11 +20,11 @@ public class Expense {
         this.id = id;
     }
 
-    public long getAmount() {
+    public float getAmount() {
         return this.amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
