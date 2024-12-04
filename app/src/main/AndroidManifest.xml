@@ -12,6 +12,9 @@
             android:name=".activity.EditbudgetActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.ExpensesListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.AddExpenseActivity"
             android:exported="false"
             android:taskAffinity="" />
