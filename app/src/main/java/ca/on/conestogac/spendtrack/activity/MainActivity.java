@@ -17,12 +17,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityMainBinding;
+import ca.on.conestogac.spendtrack.databinding.ExpenseListRowBinding;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     // Instance of the generated binding class.
     ActivityMainBinding binding;
+    ExpensesListActivity expenseBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
     // Private method to set the expenses list action button listener.
     private void setExpensesListActionButtonListener() {
         binding.buttonExpensesList.setOnClickListener( view -> {
+            Intent intent = new Intent(MainActivity.this, ExpensesListActivity.class);
+            startActivity(intent);
         });
     }
 
