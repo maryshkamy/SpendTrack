@@ -17,7 +17,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityMainBinding;
-import ca.on.conestogac.spendtrack.databinding.ExpenseListRowBinding;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Validation of an existing budget value.
         if (BudgetUtils.getBudgetValue(this) == 0f) {
-            BudgetUtils.saveBudget((float) 5000, this);
+            setEditBudgetIntent();
+          //  BudgetUtils.saveBudget((float) 5000, this);
         }
 
         setupLayout();
@@ -83,9 +83,16 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonAddExpense.setLayoutParams(params);
     }
 
+    // Private method to set the EditbudgetActivity screen.
+    private void setEditBudgetIntent () {
+        Intent intent = new Intent(MainActivity.this, EditbudgetActivity.class);
+        startActivity(intent);
+    }
+
     // Private method to set the settings action button listener.
     private void setSettingsActionButtonListener() {
         binding.buttonSettings.setOnClickListener( view -> {
+            setEditBudgetIntent();
         });
     }
 

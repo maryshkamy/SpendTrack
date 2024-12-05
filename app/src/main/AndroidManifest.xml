@@ -10,7 +10,9 @@
         android:theme="@style/Theme.SpendTrack">
         <activity
             android:name=".activity.EditbudgetActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:taskAffinity=""
+            android:theme="@style/Theme.SpendTrack" />
         <activity
             android:name=".activity.ExpensesListActivity"
             android:exported="false" />
