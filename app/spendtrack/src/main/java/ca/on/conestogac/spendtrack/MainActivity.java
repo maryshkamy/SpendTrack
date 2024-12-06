@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +149,16 @@ public class MainActivity extends AppCompatActivity implements MessageClient.OnM
         binding.progressTextView.setText(String.format("%s%%", (int) progress));
         binding.circularProgressIndicator.setMax(100);
         binding.circularProgressIndicator.setProgress((int) progress);
+
+        DecimalFormat formatter = new DecimalFormat("#,##0.00");
+        String formattedBudget = "$" + formatter.format(budget);
+        binding.currentBudgetTextView.setText(
+                String.format(
+                        "%s %s",
+                        getString(R.string.current_total_budget),
+                        formattedBudget
+                )
+        );
     }
 
     // Private method to update the expenses list.

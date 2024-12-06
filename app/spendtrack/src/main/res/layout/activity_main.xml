@@ -39,8 +39,18 @@
         android:layout_marginTop="8dp"
         android:layout_gravity="center"
         android:text="@string/budget_usage"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:textStyle="bold"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/currentBudgetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="2dp"
+        android:layout_gravity="center"
+        android:textSize="11sp"
         android:textColor="@android:color/white"/>
 
     <TextView

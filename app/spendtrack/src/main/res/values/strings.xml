@@ -3,4 +3,5 @@
 
     <string name="budget_usage">Budget Usage</string>
     <string name="expenses_list">Expenses List:</string>
+    <string name="current_total_budget">Current Total Budget:</string>
 </resources>
