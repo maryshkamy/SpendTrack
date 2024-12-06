@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpendTrack">
         <activity
-            android:name=".activity.EditbudgetActivity"
+            android:name=".activity.EditBudgetActivity"
             android:exported="false"
             android:taskAffinity=""
             android:theme="@style/Theme.SpendTrack" />

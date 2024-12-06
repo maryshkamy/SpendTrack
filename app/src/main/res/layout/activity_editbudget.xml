@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.EditbudgetActivity">
+    tools:context=".activity.EditBudgetActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -55,11 +55,22 @@
                     android:ellipsize="end"
                     android:background="@drawable/edittext_rounded_background" />
 
+                <TextView
+                    android:id="@+id/currentBudgetTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/budget_usage"
+                    android:textSize="8sp"
+                    android:textColor="@android:color/white"/>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/setNewBudgetButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:padding="10dp"
                     android:gravity="center"
                     android:textSize="14sp"

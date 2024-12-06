@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     // Private method to set the initial state for any ui component.
     private void setup() {
 
-        // Validation of an existing budget value.
+        // Redirects to edit budget activity screen
         if (BudgetUtils.getBudgetValue(this) == 0f) {
             setEditBudgetIntent();
           //  BudgetUtils.saveBudget((float) 5000, this);
@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonAddExpense.setLayoutParams(params);
     }
 
-    // Private method to set the EditbudgetActivity screen.
+    // Private method to set the EditBudgetActivity screen.
     private void setEditBudgetIntent () {
-        Intent intent = new Intent(MainActivity.this, EditbudgetActivity.class);
+        Intent intent = new Intent(MainActivity.this, EditBudgetActivity.class);
         startActivity(intent);
     }
 
