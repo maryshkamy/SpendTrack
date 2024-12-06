@@ -20,6 +20,8 @@ import ca.on.conestogac.spendtrack.model.Expense;
 import ca.on.conestogac.spendtrack.utils.Constants;
 import ca.on.conestogac.spendtrack.utils.MessageUtils;
 import ca.on.conestogac.spendtrack.utils.ExpenseUtils;
+import ca.on.conestogac.spendtrack.utils.BudgetUtils;
+import ca.on.conestogac.spendtrack.utils.NotificationHelper;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -79,7 +81,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    // Private method to set the initial state for any ui component.
+    // Private method to set the initial state for any UI component.
     private void setup() {
         setListeners();
         setupAmountEditText();
@@ -91,7 +93,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         binding.saveButton.setOnClickListener(this);
     }
 
-    // Private method to setup the edit text for the amount.
+    // Private method to setup the amount edit text.
     private void setupAmountEditText() {
         binding.amountEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -101,9 +103,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                     if (!TextUtils.isEmpty(text)) {
                         v.setText("");
-
                         v.clearFocus();
-
                         return true;
                     }
                 }
@@ -112,7 +112,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    // Private method to setup the edit text for the description.
+    // Private method to setup the description edit text.
     private void setupDescriptionEditText() {
         binding.descriptionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -122,9 +122,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                     if (!TextUtils.isEmpty(text)) {
                         v.setText("");
-
                         v.clearFocus();
-
                         return true;
                     }
                 }
@@ -138,15 +136,17 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         if (id == null) {
             id = String.valueOf(System.currentTimeMillis());
         }
-
         return new Expense(id, amount, description);
     }
 
-    // Private method to save expense and show confirmation view.
+    // Private method to save the expense and show confirmation view.
     private void saveTransaction(Expense expense, int action) {
         if (action == Constants.ACTION_ADD) {
             ExpenseUtils.save(expense, this);
             MessageUtils.showSuccessMessage(getString(R.string.expense_saved), this);
+
+            // Trigger notifications after saving the expense
+            triggerNotifications();
 
             binding.amountEditText.setText("");
             binding.descriptionEditText.setText("");
@@ -154,4 +154,42 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             finish();
         }
     }
+
+    // Method to trigger notifications after saving an expense
+    private void triggerNotifications() {
+        // Get the current budget and expenses
+        float budget = BudgetUtils.getBudgetValue(this);
+        float currentExpenses = BudgetUtils.getCurrentTotalExpenseValue(this);
+
+        // Check if the user has exceeded the budget (over 100%)
+        if (currentExpenses > budget) {
+            // Calculate the amount over the budget
+            float overAmount = currentExpenses - budget;
+
+            // Send a notification showing how much over the budget they are
+            NotificationHelper.sendNotification(
+                    this,
+                    "Budget Exceeded",
+                    "You’ve exceeded your budget by " + String.format("%.2f", overAmount) + "!"
+            );
+        }
+        // Check if the user is between 95% and 100% of the budget
+        else if (currentExpenses >= 0.95 * budget) {
+            NotificationHelper.sendNotification(
+                    this,
+                    "Budget Warning",
+                    "You’re getting close to your budget limit. You have only " + String.format("%.2f", (budget - currentExpenses)) + " left."
+            );
+        }
+        // Check if the user has reached 50% of the budget
+        else if (currentExpenses >= 0.5 * budget) {
+            NotificationHelper.sendNotification(
+                    this,
+                    "Budget Progress",
+                    "You have reached 50% of your budget. You have " + String.format("%.2f", (budget - currentExpenses)) + " left."
+            );
+        }
+    }
+
+
 }
