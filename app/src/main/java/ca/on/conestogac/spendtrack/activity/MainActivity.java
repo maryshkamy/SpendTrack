@@ -3,6 +3,7 @@ package ca.on.conestogac.spendtrack.activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
@@ -15,16 +16,23 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.wearable.Wearable;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.List;
+
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityMainBinding;
-import ca.on.conestogac.spendtrack.databinding.ExpenseListRowBinding;
+import ca.on.conestogac.spendtrack.model.Expense;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
+import ca.on.conestogac.spendtrack.utils.ExpenseUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     // Instance of the generated binding class.
     ActivityMainBinding binding;
-    ExpensesListActivity expenseBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateProgressIndicator();
+        sendDataToMobile();
     }
 
     // Private method to set the initial state for any ui component.
@@ -129,5 +138,47 @@ public class MainActivity extends AppCompatActivity {
         binding.progressTextView.setText(String.format("%s%%", (int) progress));
         binding.circularProgressIndicator.setMax(100);
         binding.circularProgressIndicator.setProgress((int) progress);
+    }
+
+    // Private method for sending data to the mobile device.
+    private void sendDataToMobile() {
+        float budget = BudgetUtils.getBudgetValue(this);
+        float currentExpenses = BudgetUtils.getCurrentTotalExpenseValue(this);
+        List<Expense> expenseList = ExpenseUtils.getAllExpenses(this);
+
+        JSONArray jsonArray = createJSONArrayData(budget, currentExpenses, expenseList);
+        byte[] data = jsonArray.toString().getBytes();
+        Wearable.getMessageClient(this)
+                .sendMessage("", "/budget_data", data)
+                .addOnSuccessListener(statusInfo ->
+                        Log.d("Wearable", "Data sent successfully: " + statusInfo))
+                .addOnFailureListener(e ->
+                        Log.e("Wearable", "Failed to send data", e));
+    }
+
+    // Private method for the creation of a json array of data.
+    private JSONArray createJSONArrayData(float budget, float currentExpenses, List<Expense> expenseList) {
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            JSONObject budgetData = new JSONObject();
+            budgetData.put("budget", budget);
+            budgetData.put("current_expenses", currentExpenses);
+
+            jsonArray.put(budgetData);
+
+            for (Expense expense : expenseList) {
+                JSONObject expenseData = new JSONObject();
+                expenseData.put("expense_id", expense.getId());
+                expenseData.put("expense_description", expense.getDescription());
+                expenseData.put("expense_amount", expense.getAmount());
+
+                jsonArray.put(expenseData);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonArray;
     }
 }

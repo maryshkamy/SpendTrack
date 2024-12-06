@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SpendTrack"
 include(":app")
- 
+include(":app:spendtrack")

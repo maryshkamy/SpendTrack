@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SpendTrack</string>
+
+    <string name="budget_usage">Budget Usage</string>
+    <string name="expenses_list">Expenses List:</string>
+</resources>
