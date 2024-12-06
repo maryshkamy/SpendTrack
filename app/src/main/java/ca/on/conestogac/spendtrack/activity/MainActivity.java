@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         // Redirects to edit budget activity screen
         if (BudgetUtils.getBudgetValue(this) == 0f) {
             setEditBudgetIntent();
-          //  BudgetUtils.saveBudget((float) 5000, this);
         }
 
         setupLayout();
