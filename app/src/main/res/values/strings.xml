@@ -10,4 +10,10 @@
     <string name="add_expense_error_message">Fill all fields.</string>
     <string name="expense_saved">Expense saved.</string>
     <string name="budget_usage">Budget Usage</string>
+
+    <string name="set_new_budget">Set New Budget</string>
+    <string name="budget_placeholder">$1000.00</string>
+    <string name="invalid_budget_error_message">Invalid budget value.</string>
+    <string name="nonzero_budget_error_message">Please enter a non-zero budget value.</string>
+    <string name="new_budget_set">New budget set to:</string>
 </resources>
