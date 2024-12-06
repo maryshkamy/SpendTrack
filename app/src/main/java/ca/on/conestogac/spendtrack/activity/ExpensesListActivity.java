@@ -1,10 +1,6 @@
 package ca.on.conestogac.spendtrack.activity;
 
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,9 +14,8 @@ import ca.on.conestogac.spendtrack.utils.ExpenseUtils;
 
 public class ExpensesListActivity extends AppCompatActivity {
 
+    // Instance of the generated binding class.
     private ActivityExpensesListBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
