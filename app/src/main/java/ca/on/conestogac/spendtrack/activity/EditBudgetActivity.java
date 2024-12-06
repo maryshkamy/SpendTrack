@@ -15,7 +15,9 @@ import java.text.DecimalFormat;
 
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityEditbudgetBinding;
+import ca.on.conestogac.spendtrack.model.Expense;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
+import ca.on.conestogac.spendtrack.utils.Constants;
 import ca.on.conestogac.spendtrack.utils.MessageUtils;
 
 public class EditBudgetActivity extends AppCompatActivity implements View.OnClickListener {
@@ -105,17 +107,24 @@ public class EditBudgetActivity extends AppCompatActivity implements View.OnClic
                 }
             }
 
-            // Set new budget
-            BudgetUtils.saveBudget(newBudget,this);
+            // check if budget is non-zero
+            if (newBudget!= 0L) {
+                // Set new budget
+                BudgetUtils.saveBudget(newBudget,this);
 
-            String formattedAmount = formatBudgetAmountDisplay(newBudget);
+                String formattedAmount = formatBudgetAmountDisplay(newBudget);
 
-            // Display success message
-            MessageUtils.showSuccessMessage(getString(R.string.new_budget_set)
-                    + " " + formattedAmount, this);
+                // Display success message
+                MessageUtils.showSuccessMessage(getString(R.string.new_budget_set)
+                        + " " + formattedAmount, this);
 
-            binding.budgetEditText.setText("");
-            finish();
+                binding.budgetEditText.setText("");
+                finish();
+            } else {
+                MessageUtils.showErrorMessage(getString(R.string.nonzero_budget_error_message), this);
+            }
+
+
         }
     }
 }
