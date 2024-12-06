@@ -99,11 +99,17 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonAddExpense.setLayoutParams(params);
     }
 
+    // Private method to set the EditBudgetActivity screen.
+    private void setEditBudgetIntent () {
+        Intent intent = new Intent(MainActivity.this, EditBudgetActivity.class);
+        startActivity(intent);
+    }
+
+
     // Private method to set the settings action button listener (to change budget).
     private void setSettingsActionButtonListener() {
         binding.buttonSettings.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, EditBudgetActivity.class);
-            startActivity(intent);
+            setEditBudgetIntent();
         });
     }
 
