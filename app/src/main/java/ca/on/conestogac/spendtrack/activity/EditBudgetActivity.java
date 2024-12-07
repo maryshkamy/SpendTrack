@@ -15,13 +15,12 @@ import java.text.DecimalFormat;
 
 import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityEditbudgetBinding;
-import ca.on.conestogac.spendtrack.model.Expense;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
-import ca.on.conestogac.spendtrack.utils.Constants;
 import ca.on.conestogac.spendtrack.utils.MessageUtils;
 
 public class EditBudgetActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // Instance of the generated binding class.
     private ActivityEditbudgetBinding binding;
 
     @Override
@@ -34,7 +33,7 @@ public class EditBudgetActivity extends AppCompatActivity implements View.OnClic
         View view = binding.getRoot();
         setContentView(view);
 
-        // initial setup
+        // Initial setup.
         setup();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -44,51 +43,7 @@ public class EditBudgetActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    private void setup() {
-        setListeners();
-        setupBudgetEditText();
-        setupLayout();
-    }
-
-    // set up related
-    private void setupLayout () {
-
-        // set hint to current value
-        float currentBudget = BudgetUtils.getBudgetValue(this);
-
-        String currentBudgetStr = formatBudgetAmountDisplay(currentBudget);
-        binding.budgetEditText.setHint(currentBudgetStr);
-        binding.currentBudgetTextView.setText(String.format("Current total budget: %s", currentBudgetStr));
-    }
-
-    private void setListeners() {
-        binding.setNewBudgetButton.setOnClickListener(this);
-    }
-
-    private void setupBudgetEditText() {
-        binding.budgetEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                String text = v.getText().toString();
-
-                // validate if text is empty
-                if (!TextUtils.isEmpty(text)) {
-                    v.setText("");
-
-                    v.clearFocus();
-
-                    return true;
-                }
-            }
-            return false;
-        });
-    }
-
-    // Set display format for the new budget
-    private String formatBudgetAmountDisplay (float amount) {
-        DecimalFormat formatter = new DecimalFormat("#,##0.00");
-        return "$" + formatter.format(amount);
-    }
-
+    // View Interface Method for click actions.
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.setNewBudgetButton) {
@@ -115,16 +70,65 @@ public class EditBudgetActivity extends AppCompatActivity implements View.OnClic
                 String formattedAmount = formatBudgetAmountDisplay(newBudget);
 
                 // Display success message
-                MessageUtils.showSuccessMessage(getString(R.string.new_budget_set)
-                        + " " + formattedAmount, this);
+                MessageUtils.showSuccessMessage(
+                        getString(R.string.new_budget_set) + " " + formattedAmount,
+                        this
+                );
 
                 binding.budgetEditText.setText("");
                 finish();
             } else {
-                MessageUtils.showErrorMessage(getString(R.string.nonzero_budget_error_message), this);
+                MessageUtils.showErrorMessage(
+                        getString(R.string.nonzero_budget_error_message),
+                        this
+                );
             }
-
-
         }
+    }
+
+    // Private method to set the initial state for any UI component.
+    private void setup() {
+        setListeners();
+        setupBudgetEditText();
+        setupLayout();
+    }
+
+    // Private method to set all the listeners.
+    private void setListeners() {
+        binding.setNewBudgetButton.setOnClickListener(this);
+    }
+
+    // set up related
+    private void setupLayout () {
+        // set hint to current value
+        float currentBudget = BudgetUtils.getBudgetValue(this);
+
+        String currentBudgetStr = formatBudgetAmountDisplay(currentBudget);
+        binding.budgetEditText.setHint(currentBudgetStr);
+        binding.currentBudgetTextView.setText(getString(R.string.current_total_budget, currentBudgetStr));
+    }
+
+    private void setupBudgetEditText() {
+        binding.budgetEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                String text = v.getText().toString();
+
+                // validate if text is empty
+                if (!TextUtils.isEmpty(text)) {
+                    v.setText("");
+
+                    v.clearFocus();
+
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    // Set display format for the new budget
+    private String formatBudgetAmountDisplay (float amount) {
+        DecimalFormat formatter = new DecimalFormat("#,##0.00");
+        return "$" + formatter.format(amount);
     }
 }

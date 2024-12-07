@@ -34,6 +34,7 @@ import ca.on.conestogac.spendtrack.R;
 import ca.on.conestogac.spendtrack.databinding.ActivityMainBinding;
 import ca.on.conestogac.spendtrack.model.Expense;
 import ca.on.conestogac.spendtrack.utils.BudgetUtils;
+import ca.on.conestogac.spendtrack.utils.Constants;
 import ca.on.conestogac.spendtrack.utils.ExpenseUtils;
 import ca.on.conestogac.spendtrack.utils.NotificationHelper;
 
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Instance of the generated binding class.
     ActivityMainBinding binding;
-
-    private static final int REQUEST_CODE_PERMISSION = 1001;  // Permission request code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +82,29 @@ public class MainActivity extends AppCompatActivity {
         sendDataToMobile();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == Constants.REQUEST_CODE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                Toast.makeText(
+                        this,
+                        getString(R.string.notification_permission_granted),
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                // Permission denied
+                Toast.makeText(
+                        this,
+                        getString(R.string.notification_permission_denied),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        }
+    }
+
     // Private method to set the initial state for any UI component.
     private void setup() {
         // Redirects to edit budget activity screen
@@ -96,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         setAddExpenseActionButtonListener();
     }
 
+    // Private method to set the width and height for the buttons according to the device screen size.
     private void setupLayout() {
         WindowManager windowManager = getWindowManager();
         WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
@@ -148,22 +171,7 @@ public class MainActivity extends AppCompatActivity {
             // If permission is not granted, request permission
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                    REQUEST_CODE_PERMISSION);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_CODE_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
-                Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show();
-            } else {
-                // Permission denied
-                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
-            }
+                    Constants.REQUEST_CODE_PERMISSION);
         }
     }
 
@@ -183,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         binding.circularProgressIndicator.setProgress((int) progress);
     }
 
+    // Private method to update the circular progress indicator.
     private void updateProgressIndicatorColor(float progress) {
         if (progress >= 0 && progress <= 50) {
             @ColorInt int greenColor = getResources().getColor(R.color.green, getTheme());
@@ -245,18 +254,20 @@ public class MainActivity extends AppCompatActivity {
         float remainingBalance = budget - currentExpenses;
 
         // Format the message
-        String message = String.format(
-                "Your current expenses: $%.2f\nRemaining budget: $%.2f\nTotal budget: $%.2f",
-                currentExpenses, remainingBalance, budget);
+        String message = getString(
+                R.string.daily_budget_details_message,
+                currentExpenses,
+                remainingBalance,
+                budget
+        );
 
         // Send the notification with the dynamic message
         NotificationHelper.sendNotification(
                 this,
-                "Daily Budget Summary",
+                getString(R.string.daily_budget_summary),
                 message
         );
     }
-
 
     // Method to be called after saving an expense, triggering the notifications
     public void triggerNotificationsAfterExpenseSaved() {
@@ -271,8 +282,8 @@ public class MainActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 NotificationHelper.sendNotification(
                         this,
-                        "Reminder",
-                        "Don't forget to track your expenses!"
+                        getString(R.string.reminder),
+                        getString(R.string.dont_forget_to_track_your_expenses)
                 );
             }, 1000 * 60 * 60 * 24 * 3); // 3 days delay
         }
@@ -281,8 +292,8 @@ public class MainActivity extends AppCompatActivity {
         if (isTimeForDailySummary()) {
             NotificationHelper.sendNotification(
                     this,
-                    "Daily Budget Summary",
-                    "Your current expenses and remaining budget status."
+                    getString(R.string.daily_budget_summary),
+                    getString(R.string.your_current_expenses_and_remaining_budget_status)
             );
         }
     }

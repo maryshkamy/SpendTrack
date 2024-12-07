@@ -30,6 +30,6 @@ public class ExpensesListActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         binding.recyclerViewExpenses.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerViewExpenses.setAdapter(new ExpensesRecyclerViewAdapter(expenseList, this));
+        binding.recyclerViewExpenses.setAdapter(new ExpensesRecyclerViewAdapter(expenseList));
     }
 }

@@ -153,9 +153,8 @@ public class MainActivity extends AppCompatActivity implements MessageClient.OnM
         DecimalFormat formatter = new DecimalFormat("#,##0.00");
         String formattedBudget = "$" + formatter.format(budget);
         binding.currentBudgetTextView.setText(
-                String.format(
-                        "%s %s",
-                        getString(R.string.current_total_budget),
+                getString(
+                        R.string.current_total_budget,
                         formattedBudget
                 )
         );

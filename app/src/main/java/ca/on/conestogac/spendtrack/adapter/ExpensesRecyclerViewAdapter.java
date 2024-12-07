@@ -1,13 +1,8 @@
 package ca.on.conestogac.spendtrack.adapter;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,12 +17,10 @@ public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesRe
 
     // Private instance of the expenses list.
     private final List<Expense> expenses;
-    private final Context context;
 
     // Class constructor.
-    public ExpensesRecyclerViewAdapter(List<Expense> expenses, Context context) {
+    public ExpensesRecyclerViewAdapter(List<Expense> expenses) {
         this.expenses = expenses;
-        this.context = context;
     }
 
     @NonNull
@@ -47,7 +40,7 @@ public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesRe
         // Bind the data to the ViewHolder
         Expense expense = expenses.get(position);
         holder.bindView(
-                (long) (expense.getAmount() * 100), // Assuming `Expense.getAmount()` returns a float
+                (long) (expense.getAmount() * 100),
                 expense.getDescription(),
                 position
         );

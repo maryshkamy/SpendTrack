@@ -169,27 +169,25 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             // Send a notification showing how much over the budget they are
             NotificationHelper.sendNotification(
                     this,
-                    "Budget Exceeded",
-                    "You’ve exceeded your budget by " + String.format("%.2f", overAmount) + "!"
+                    getString(R.string.budget_exceeded),
+                    getString(R.string.budget_exceeded_message, overAmount)
             );
         }
         // Check if the user is between 95% and 100% of the budget
         else if (currentExpenses >= 0.95 * budget) {
             NotificationHelper.sendNotification(
                     this,
-                    "Budget Warning",
-                    "You’re getting close to your budget limit. You have only " + String.format("%.2f", (budget - currentExpenses)) + " left."
+                    getString(R.string.budget_warning),
+                    getString(R.string.budget_warning_message, (budget - currentExpenses))
             );
         }
         // Check if the user has reached 50% of the budget
         else if (currentExpenses >= 0.5 * budget) {
             NotificationHelper.sendNotification(
                     this,
-                    "Budget Progress",
-                    "You have reached 50% of your budget. You have " + String.format("%.2f", (budget - currentExpenses)) + " left."
+                    getString(R.string.budget_progress),
+                    getString(R.string.budget_progress_message, (budget - currentExpenses))
             );
         }
     }
-
-
 }
