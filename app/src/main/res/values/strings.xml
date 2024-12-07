@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">SpendTrack</string>
+
+    <string name="add_expense">Add Expense</string>
+    <string name="amount_placeholder">$10.00</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+
+    <string name="invalid_amount_error_message">Invalid amount value.</string>
+    <string name="add_expense_error_message">Fill all fields.</string>
+    <string name="expense_saved">Expense saved.</string>
+    <string name="budget_usage">Budget Usage</string>
+
+    <string name="set_new_budget">Set New Budget</string>
+    <string name="budget_placeholder">$1000.00</string>
+    <string name="invalid_budget_error_message">Invalid budget value.</string>
+    <string name="nonzero_budget_error_message">Please enter a non-zero budget value.</string>
+    <string name="new_budget_set">New budget set to:</string>
+    <string name="current_total_budget">Current total budget: %s</string>
+
+    <string name="budget_exceeded">Budget Exceeded</string>
+    <string name="budget_exceeded_message">You’ve exceeded your budget by %.2f!</string>
+    <string name="budget_warning">Budget Warning</string>
+    <string name="budget_warning_message">You’re getting close to your budget limit. You have only %.2f left.</string>
+    <string name="budget_progress">Budget Progress</string>
+    <string name="budget_progress_message">You have reached 50%% of your budget. You have %.2f left.</string>
+
+    <string name="daily_budget_details_message">
+        Your current expenses: $%.2f
+        Remaining budget: $%.2f
+        Total budget: $%.2f
+    </string>
+    <string name="daily_budget_summary">Daily Budget Summary</string>
+    <string name="reminder">Reminder</string>
+    <string name="dont_forget_to_track_your_expenses">Don\'t forget to track your expenses!</string>
+    <string name="your_current_expenses_and_remaining_budget_status">Your current expenses and remaining budget status.</string>
+    <string name="notification_permission_granted">Notification permission granted</string>
+    <string name="notification_permission_denied">Notification permission denied</string>
+</resources>
