@@ -59,13 +59,13 @@ public class NotificationHelper {
                 .setContentIntent(pendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-    notificationManager.notify((int) System.currentTimeMillis(), builder.build());
-} else {
-    // Handle the case where the permission is not granted
-    // You might want to request the permission here
-}
 
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+        } else {
+            // Handle the case where the permission is not granted
+            // You might want to request the permission here
+        }
     }
 
     // Method to schedule a notification

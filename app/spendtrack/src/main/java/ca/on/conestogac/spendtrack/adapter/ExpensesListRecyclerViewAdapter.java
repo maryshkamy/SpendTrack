@@ -13,32 +13,27 @@ import java.util.List;
 import ca.on.conestogac.spendtrack.databinding.ExpenseListRowBinding;
 import ca.on.conestogac.spendtrack.model.Expense;
 
-public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesRecyclerViewAdapter.ViewHolder> {
+public class ExpensesListRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesListRecyclerViewAdapter.ViewHolder> {
 
     // Private instance of the expenses list.
-    private final List<Expense> expenses;
+    private final List<Expense> expenseList;
 
     // Class constructor.
-    public ExpensesRecyclerViewAdapter(List<Expense> expenses) {
-        this.expenses = expenses;
+    public ExpensesListRecyclerViewAdapter(List<Expense> expenseList) {
+        this.expenseList = expenseList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Use ViewBinding to inflate the layout
         ExpenseListRowBinding binding = ExpenseListRowBinding.inflate(
-                LayoutInflater.from(parent.getContext()),
-                parent,
-                false
-        );
+                LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Bind the data to the ViewHolder
-        Expense expense = expenses.get(position);
+        Expense expense = expenseList.get(position);
         holder.bindView(
                 (long) (expense.getAmount() * 100),
                 expense.getDescription(),
@@ -48,11 +43,11 @@ public class ExpensesRecyclerViewAdapter extends RecyclerView.Adapter<ExpensesRe
 
     @Override
     public int getItemCount() {
-        return expenses.size();
+        return expenseList.size();
     }
 
-    // ViewHolder class
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         private final ExpenseListRowBinding binding;
 
         public ViewHolder(ExpenseListRowBinding binding) {
